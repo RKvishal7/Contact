@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RKvishal · ML Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #080a0e; --bg2: #0d1117; --bg3: #111620;
+    --border: rgba(255,255,255,0.07); --border-hover: rgba(255,255,255,0.18);
+    --text: #f0f2f5; --muted: #6b7280;
+    --accent-glow: #7fff5f;
+    --mono: 'DM Mono', monospace; --sans: 'Syne', sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: var(--sans); min-height: 100vh; overflow-x: hidden; }
+  body::before {
+    content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  }
+  .orb { position: fixed; width: 700px; height: 700px; background: radial-gradient(circle, rgba(100,220,80,0.06) 0%, transparent 70%); top: -200px; left: 50%; transform: translateX(-50%); pointer-events: none; z-index: 0; }
+  .wrapper { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; padding: 80px 24px 80px; }
+
+  /* HEADER */
+  .header { margin-bottom: 64px; animation: fadeUp 0.7s ease both; }
+  .badge { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-glow); border: 1px solid rgba(127,255,95,0.25); border-radius: 100px; padding: 5px 14px; margin-bottom: 28px; }
+  .badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent-glow); box-shadow: 0 0 8px var(--accent-glow); animation: pulse 2s ease infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .name { font-size: clamp(48px,10vw,76px); font-weight: 800; letter-spacing: -0.03em; line-height: 0.95; margin-bottom: 20px; background: linear-gradient(135deg,#ffffff 40%,#8a9aaa 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .tagline { font-family: var(--mono); font-size: 13px; color: var(--muted); letter-spacing: 0.04em; max-width: 420px; line-height: 1.7; }
+  .tagline span { color: rgba(255,255,255,0.5); }
+
+  /* SECTION */
+  .section-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; }
+  .divider { height: 1px; background: linear-gradient(90deg,transparent,var(--border),var(--border),transparent); margin: 48px 0; }
+
+  /* GRID */
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  /* CARD */
+  .card { position: relative; display: flex; align-items: center; gap: 16px; background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; padding: 20px 22px; text-decoration: none; color: var(--text); transition: border-color 0.2s, background 0.2s, transform 0.2s; overflow: hidden; animation: fadeUp 0.5s ease both; }
+  .card::before { content: ''; position: absolute; inset: 0; background: var(--card-glow, transparent); opacity: 0; transition: opacity 0.3s; border-radius: 16px; }
+  .card:hover { border-color: var(--border-hover); background: var(--bg3); transform: translateY(-3px); }
+  .card:hover::before { opacity: 1; }
+  .card.github { --card-glow: radial-gradient(ellipse at top left,rgba(255,255,255,0.04),transparent 60%); }
+  .card.linkedin { --card-glow: radial-gradient(ellipse at top left,rgba(10,102,194,0.08),transparent 60%); }
+  .card.instagram { --card-glow: radial-gradient(ellipse at top left,rgba(225,48,108,0.08),transparent 60%); }
+  .card.email { --card-glow: radial-gradient(ellipse at top left,rgba(100,220,80,0.05),transparent 60%); }
+  .card.custom { --card-glow: radial-gradient(ellipse at top left,rgba(180,130,255,0.07),transparent 60%); }
+  .icon-wrap { flex-shrink: 0; width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+  .icon-wrap svg { width: 22px; height: 22px; }
+  .card.github .icon-wrap { background: rgba(255,255,255,0.07); }
+  .card.linkedin .icon-wrap { background: rgba(10,102,194,0.15); }
+  .card.instagram .icon-wrap { background: rgba(225,48,108,0.13); }
+  .card.email .icon-wrap { background: rgba(100,220,80,0.1); }
+  .card-info { flex: 1; min-width: 0; }
+  .platform { font-size: 15px; font-weight: 600; margin-bottom: 2px; letter-spacing: -0.01em; }
+  .handle { font-family: var(--mono); font-size: 11px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .arrow { flex-shrink: 0; color: var(--muted); transition: transform 0.2s, color 0.2s; }
+  .card:hover .arrow { transform: translate(2px,-2px); color: var(--text); }
+
+  /* DELETE BTN on custom cards */
+  .delete-btn { position: absolute; top: 8px; right: 8px; width: 22px; height: 22px; border-radius: 6px; background: rgba(255,255,255,0.05); border: none; color: var(--muted); cursor: pointer; font-size: 13px; display: none; align-items: center; justify-content: center; transition: background 0.2s, color 0.2s; z-index: 2; }
+  .card:hover .delete-btn { display: flex; }
+  .delete-btn:hover { background: rgba(220,60,60,0.2); color: #ff6b6b; }
+
+  /* ADD BUTTON */
+  .add-btn { display: flex; align-items: center; justify-content: center; gap: 10px; background: transparent; border: 1px dashed rgba(127,255,95,0.2); border-radius: 16px; padding: 20px 22px; color: rgba(127,255,95,0.5); font-family: var(--sans); font-size: 14px; font-weight: 600; cursor: pointer; transition: border-color 0.2s, color 0.2s, background 0.2s; letter-spacing: 0.02em; }
+  .add-btn:hover { border-color: rgba(127,255,95,0.5); color: var(--accent-glow); background: rgba(127,255,95,0.04); }
+  .add-btn svg { width: 18px; height: 18px; }
+
+  /* MODAL OVERLAY */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 100; align-items: center; justify-content: center; backdrop-filter: blur(6px); }
+  .modal-overlay.open { display: flex; animation: fadeIn 0.2s ease; }
+  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+  /* MODAL BOX */
+  .modal { background: #0f1419; border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 32px; width: 100%; max-width: 440px; margin: 16px; animation: slideUp 0.25s ease; }
+  @keyframes slideUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+  .modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
+  .modal-title { font-size: 18px; font-weight: 700; letter-spacing: -0.02em; }
+  .modal-close { background: rgba(255,255,255,0.06); border: none; color: var(--muted); width: 32px; height: 32px; border-radius: 8px; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+  .modal-close:hover { background: rgba(255,255,255,0.12); color: var(--text); }
+
+  /* FORM */
+  .field { margin-bottom: 18px; }
+  .field label { display: block; font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .field input { width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 11px 14px; color: var(--text); font-family: var(--mono); font-size: 13px; outline: none; transition: border-color 0.2s; }
+  .field input:focus { border-color: rgba(127,255,95,0.4); }
+  .field input::placeholder { color: rgba(255,255,255,0.2); }
+
+  /* COLOR PICKER ROW */
+  .color-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .color-swatch { width: 28px; height: 28px; border-radius: 8px; cursor: pointer; border: 2px solid transparent; transition: transform 0.15s, border-color 0.15s; }
+  .color-swatch:hover { transform: scale(1.15); }
+  .color-swatch.selected { border-color: #fff; }
+
+  /* ICON PICKER */
+  .icon-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .icon-opt { width: 36px; height: 36px; border-radius: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; transition: background 0.15s, border-color 0.15s; }
+  .icon-opt:hover { background: rgba(255,255,255,0.1); }
+  .icon-opt.selected { border-color: rgba(127,255,95,0.6); background: rgba(127,255,95,0.08); }
+
+  /* SUBMIT */
+  .submit-btn { width: 100%; margin-top: 24px; padding: 13px; background: rgba(127,255,95,0.1); border: 1px solid rgba(127,255,95,0.3); border-radius: 12px; color: var(--accent-glow); font-family: var(--sans); font-size: 14px; font-weight: 700; letter-spacing: 0.04em; cursor: pointer; transition: background 0.2s, border-color 0.2s; }
+  .submit-btn:hover { background: rgba(127,255,95,0.18); border-color: rgba(127,255,95,0.55); }
+
+  /* FOOTER */
+  .footer { margin-top: 64px; display: flex; align-items: center; justify-content: space-between; animation: fadeUp 0.7s 0.4s ease both; }
+  .footer-text { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.05em; }
+  .footer-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(127,255,95,0.4); }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+  @media(max-width:520px) {
+    .grid { grid-template-columns: 1fr; }
+    .wrapper { padding: 60px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="orb"></div>
+<div class="wrapper">
+
+  <header class="header">
+    <div class="badge">Available for collaboration</div>
+    <h1 class="name">RKvishal</h1>
+    <p class="tagline"><span>Machine Learning Engineer</span> · Building intelligent systems,<br>one model at a time.</p>
+  </header>
+
+  <div class="section-label">// connect with me</div>
+
+  <div class="grid" id="grid">
+    <!-- GitHub -->
+    <a href="https://github.com/RKvishal7" target="_blank" rel="noopener noreferrer" class="card github">
+      <div class="icon-wrap">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.341-3.369-1.341-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.349-1.086.635-1.337-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z" fill="#ffffff"/></svg>
+      </div>
+      <div class="card-info"><div class="platform">GitHub</div><div class="handle">@RKvishal7</div></div>
+      <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+    </a>
+
+    <!-- LinkedIn -->
+    <a href="https://www.linkedin.com/in/vishal-kumar-rkv48930b" target="_blank" rel="noopener noreferrer" class="card linkedin">
+      <div class="icon-wrap">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z" stroke="#4a9ff5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="2" y="9" width="4" height="12" stroke="#4a9ff5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="4" cy="4" r="2" stroke="#4a9ff5" stroke-width="2"/></svg>
+      </div>
+      <div class="card-info"><div class="platform">LinkedIn</div><div class="handle">vishal-kumar-rkv</div></div>
+      <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+    </a>
+
+    <!-- Instagram -->
+    <a href="https://www.instagram.com/code_with_rkv/" target="_blank" rel="noopener noreferrer" class="card instagram">
+      <div class="icon-wrap">
+        <svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="#e1306c" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="#e1306c" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1" fill="#e1306c"/></svg>
+      </div>
+      <div class="card-info"><div class="platform">Instagram</div><div class="handle">@code_with_rkv</div></div>
+      <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+    </a>
+
+    <!-- Email -->
+    <a href="mailto:rkvishal@example.com" class="card email">
+      <div class="icon-wrap">
+        <svg viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="3" stroke="#7fff5f" stroke-width="2"/><path d="M2 7l10 7 10-7" stroke="#7fff5f" stroke-width="2" stroke-linecap="round"/></svg>
+      </div>
+      <div class="card-info"><div class="platform">Email</div><div class="handle">Get in touch</div></div>
+      <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+    </a>
+  </div>
+
+  <div class="divider"></div>
+  <footer class="footer">
+    <span class="footer-text">© 2025 RKvishal · ML Engineer</span>
+    <div class="footer-dot"></div>
+  </footer>
+</div>
+
+<!-- ADD LINK MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-title">Add a link</span>
+      <button class="modal-close" id="modal-close" aria-label="Close">✕</button>
+    </div>
+
+    <div class="field">
+      <label>Platform name</label>
+      <input type="text" id="inp-platform" placeholder="e.g. Twitter, YouTube, Portfolio…" maxlength="30">
+    </div>
+    <div class="field">
+      <label>Handle / username</label>
+      <input type="text" id="inp-handle" placeholder="e.g. @rkvishal or your-name" maxlength="50">
+    </div>
+    <div class="field">
+      <label>URL</label>
+      <input type="url" id="inp-url" placeholder="https://…">
+    </div>
+
+    <div class="field">
+      <label>Icon</label>
+      <div class="icon-row" id="icon-row"></div>
+    </div>
+
+    <div class="field">
+      <label>Accent color</label>
+      <div class="color-row" id="color-row"></div>
+    </div>
+
+    <button class="submit-btn" id="submit-btn">Add to profile</button>
+  </div>
+</div>
+
+<script>
+const ICONS = [
+  { key:'link',    label:'🔗' },
+  { key:'twitter', label:'𝕏' },
+  { key:'youtube', label:'▶' },
+  { key:'discord', label:'💬' },
+  { key:'web',     label:'🌐' },
+  { key:'phone',   label:'📞' },
+  { key:'twitch',  label:'🎮' },
+  { key:'medium',  label:'M' },
+  { key:'notion',  label:'N' },
+  { key:'kaggle',  label:'K' },
+];
+const COLORS = ['#b685ff','#4a9ff5','#7fff5f','#ff6b6b','#ffb347','#e1306c','#00d2ff','#f5a623','#a8e063','#ffffff'];
+
+let selectedIcon = 'link';
+let selectedColor = '#b685ff';
+let customLinks = [];
+
+const LS_KEY = 'rkv_custom_links';
+
+function load() {
+  try { customLinks = JSON.parse(localStorage.getItem(LS_KEY)) || []; } catch(e) { customLinks = []; }
+}
+function save() {
+  try { localStorage.setItem(LS_KEY, JSON.stringify(customLinks)); } catch(e) {}
+}
+
+function renderIconRow() {
+  const row = document.getElementById('icon-row');
+  row.innerHTML = '';
+  ICONS.forEach(ic => {
+    const el = document.createElement('div');
+    el.className = 'icon-opt' + (ic.key === selectedIcon ? ' selected' : '');
+    el.textContent = ic.label;
+    el.title = ic.key;
+    el.onclick = () => { selectedIcon = ic.key; renderIconRow(); };
+    row.appendChild(el);
+  });
+}
+
+function renderColorRow() {
+  const row = document.getElementById('color-row');
+  row.innerHTML = '';
+  COLORS.forEach(c => {
+    const el = document.createElement('div');
+    el.className = 'color-swatch' + (c === selectedColor ? ' selected' : '');
+    el.style.background = c;
+    el.title = c;
+    el.onclick = () => { selectedColor = c; renderColorRow(); };
+    row.appendChild(el);
+  });
+}
+
+function iconSVG(key, color) {
+  const s = `stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"`;
+  const f = `fill="${color}"`;
+  switch(key) {
+    case 'twitter': return `<svg viewBox="0 0 24 24" fill="none"><path d="M4 4l16 16M4 20L20 4" ${s}/></svg>`;
+    case 'youtube': return `<svg viewBox="0 0 24 24" fill="none"><rect x="2" y="5" width="20" height="14" rx="4" ${s}/><polygon points="10,9 16,12 10,15" ${f}/></svg>`;
+    case 'discord': return `<svg viewBox="0 0 24 24" fill="none"><path d="M9 12a1 1 0 102 0 1 1 0 00-2 0zm4 0a1 1 0 102 0 1 1 0 00-2 0z" ${f}/><path d="M8.5 3S5 4 3 9c0 0-1 3-1 5s2 3 2 3l1.5-3h1L6 16s3 1 6 1 6-1 6-1l-.5-2h1.5L20 17s2-1 2-3-1-5-1-5c-2-5-5.5-6-5.5-6L14 5l-.5 1S12 5.5 12 5.5 11 6 11 6L10.5 5 8.5 3z" ${s}/></svg>`;
+    case 'web':    return `<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" ${s}/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20" ${s}/></svg>`;
+    case 'phone':  return `<svg viewBox="0 0 24 24" fill="none"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2" ${s}/></svg>`;
+    case 'twitch': return `<svg viewBox="0 0 24 24" fill="none"><path d="M3 3h18v13l-5 5H3V3z" ${s}/><line x1="9" y1="9" x2="9" y2="14" ${s}/><line x1="14" y1="9" x2="14" y2="14" ${s}/></svg>`;
+    case 'medium': return `<svg viewBox="0 0 24 24" fill="none"><circle cx="7" cy="12" r="5" ${s}/><ellipse cx="16" cy="12" rx="2" ry="5" ${s}/><line x1="21" y1="7" x2="21" y2="17" ${s}/></svg>`;
+    case 'notion': return `<svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" ${s}/><line x1="9" y1="8" x2="9" y2="16" ${s}/><line x1="9" y1="8" x2="15" y2="8" ${s}/></svg>`;
+    case 'kaggle': return `<svg viewBox="0 0 24 24" fill="none"><path d="M9 4v16l6-7-6-9z" ${s}/></svg>`;
+    default:       return `<svg viewBox="0 0 24 24" fill="none"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71" ${s}/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71" ${s}/></svg>`;
+  }
+}
+
+function buildCustomCard(link) {
+  const card = document.createElement('a');
+  card.href = link.url;
+  card.target = '_blank';
+  card.rel = 'noopener noreferrer';
+  card.className = 'card custom';
+  card.style.setProperty('--card-glow', `radial-gradient(ellipse at top left, ${link.color}18, transparent 60%)`);
+  card.dataset.id = link.id;
+
+  const iconBg = link.color + '22';
+  card.innerHTML = `
+    <div class="icon-wrap" style="background:${iconBg}">${iconSVG(link.icon, link.color)}</div>
+    <div class="card-info">
+      <div class="platform">${escHtml(link.platform)}</div>
+      <div class="handle">${escHtml(link.handle)}</div>
+    </div>
+    <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+    <button class="delete-btn" title="Remove" aria-label="Remove ${escHtml(link.platform)}">✕</button>
+  `;
+
+  card.querySelector('.delete-btn').addEventListener('click', e => {
+    e.preventDefault(); e.stopPropagation();
+    customLinks = customLinks.filter(l => l.id !== link.id);
+    save();
+    card.remove();
+    ensureAddBtn();
+  });
+  return card;
+}
+
+function ensureAddBtn() {
+  const grid = document.getElementById('grid');
+  let btn = document.getElementById('add-btn');
+  if (!btn) {
+    btn = document.createElement('button');
+    btn.id = 'add-btn';
+    btn.className = 'add-btn';
+    btn.setAttribute('aria-label', 'Add a new social link');
+    btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add a link`;
+    btn.onclick = openModal;
+  }
+  grid.appendChild(btn);
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function openModal() {
+  document.getElementById('inp-platform').value = '';
+  document.getElementById('inp-handle').value = '';
+  document.getElementById('inp-url').value = '';
+  selectedIcon = 'link'; selectedColor = COLORS[0];
+  renderIconRow(); renderColorRow();
+  document.getElementById('modal').classList.add('open');
+  document.getElementById('inp-platform').focus();
+}
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+}
+
+document.getElementById('modal-close').onclick = closeModal;
+document.getElementById('modal').addEventListener('click', e => { if(e.target === document.getElementById('modal')) closeModal(); });
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+
+document.getElementById('submit-btn').onclick = () => {
+  const platform = document.getElementById('inp-platform').value.trim();
+  const handle   = document.getElementById('inp-handle').value.trim();
+  const url      = document.getElementById('inp-url').value.trim();
+  if (!platform || !url) {
+    document.getElementById(platform ? 'inp-url' : 'inp-platform').style.borderColor = 'rgba(255,100,100,0.6)';
+    setTimeout(() => {
+      document.getElementById('inp-platform').style.borderColor = '';
+      document.getElementById('inp-url').style.borderColor = '';
+    }, 1500);
+    return;
+  }
+  const link = { id: Date.now().toString(), platform, handle: handle || url, url, icon: selectedIcon, color: selectedColor };
+  customLinks.push(link);
+  save();
+
+  const grid = document.getElementById('grid');
+  const btn = document.getElementById('add-btn');
+  grid.insertBefore(buildCustomCard(link), btn);
+  closeModal();
+};
+
+// Init
+load();
+const grid = document.getElementById('grid');
+customLinks.forEach(link => {
+  const btn = document.getElementById('add-btn');
+  if (btn) grid.insertBefore(buildCustomCard(link), btn);
+  else grid.appendChild(buildCustomCard(link));
+});
+ensureAddBtn();
+renderIconRow(); renderColorRow();
+</script>
+</body>
+</html>
